@@ -1,0 +1,52 @@
+import numpy
+import pandas
+
+d = {'name': pandas.Series(['vaibhav','nandu','parteek','rahul'], index = ['a','b','c','d']),
+     'age': pandas.Series([21,23,22,24],index = ['a','b','c','d']),
+     'fare': pandas.Series([1.25,81.25,25.23], index = ['a','b','d']),
+     'survived?' : pandas.Series([False,True,True,False],index = ['a','b','c','d'])
+     }
+value = numpy.mean(d['fare']);
+df = pandas.DataFrame(d)
+df['fare'] = df['fare'].fillna(value); #example of imputation....filling blank value with average or mean value.
+print df
+print "\n"
+olympics_medel_count_df = {'Country_Name': pandas.Series(['India','Austria','USA','Canada','Newzeland']),
+                           'Gold' : ([5,0,4,2,6]),
+                           'Silver' : ([2,6,8,1,0]),
+                           'Bronze' : ([4,2,0,1,3])
+                           }
+df2 = pandas.DataFrame(olympics_medel_count_df);
+# print df2['Gold'] -> to print only single columns of the dataframe.
+print df2[['Gold','Country_Name']] # print only the columns of 'Gold' and 'Country Name'
+print "\n"          # print the new Line
+print df.loc['c']  #print the entities present on the index 'c'
+print "\n"
+print df[df['age'] >= 22] #print the all the columns of dataframe whose age is  greater than or equal to 22
+print df['survived?'][df['age'] >= 23]
+print df['name'].map(lambda x : x>22)
+
+avg_bronze_medel = df2['Bronze'][df2['Gold']>=1]
+print numpy.mean(avg_bronze_medel)
+
+avg_gold = numpy.mean(df2['Gold'])
+avg_bronze = numpy.mean(df2['Bronze'])
+avg_silver = numpy.mean(df2['Silver'])
+
+avg_medal_count = {"Gold" : pandas.Series (avg_gold),
+                   "Silver" : pandas.Series(avg_silver),
+                   "Bronze" : pandas.Series(avg_bronze)
+                   }
+df3 = pandas.DataFrame(avg_medal_count)
+
+medal_count = df2[['Gold','Silver','Bronze']]
+points = numpy.dot(medal_count,[4,2,1])
+
+olympics_medal_count_df = {"Country_Name": pandas.Series(df2['Country_Name']),
+                           "Points": pandas.Series(points)
+                           }
+
+df4 = pandas.DataFrame(olympics_medal_count_df)
+
+print df4
+
